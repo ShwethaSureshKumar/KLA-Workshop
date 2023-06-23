@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Jun 23 11:02:10 2023
+Created on Fri Jun 23 08:01:23 2023
 
 @author: shwet
 """
@@ -30,7 +30,7 @@ y_start=data['care_areas'][0]['bottom_right']['y']
 y_stop=data['care_areas'][0]['top_left']['y']
 
 colour_count={}
-all_pic_defect=[]
+defect_list=[]
 
 for i in range(1,6):#change stop as 6
     img=Image.open("wafer_image_{0}.png".format(i))
@@ -70,16 +70,19 @@ for i in range(1,6):#change stop as 6
     
     defect_points=[]
     defect_xy=[]
-    
     for y in range(y_start,y_stop):
         for x in range(x_start,x_stop):
             colour=pixels[x,y]
             if colour!= major_col1 and colour!=major_col2:
-                defect_points.append((i,x,y))
+                defect_points.append((i,x,y_stop-y-1))
+                defect_xy.append((x,y_stop-y-1))
+                
+                
+#check every image with every other image
     #print(defect_points)
     
     
     #writing into file
-    with open("output.csv","a+") as csvfile:
-        csvwriter=csv.writer(csvfile)
-        csvwriter.writerows(defect_points)
+    # with open("output.csv","a+") as csvfile:
+    #     csvwriter=csv.writer(csvfile)
+    #     csvwriter.writerows(defect_points)
